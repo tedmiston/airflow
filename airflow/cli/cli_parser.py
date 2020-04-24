@@ -742,6 +742,10 @@ class ActionCommand(NamedTuple):
     help: str
     func: Callable
     args: Iterable[Arg]
+    # description: str = 'default action description'
+    # epilog: str = 'default action epilog'
+    description: str
+    epilog: str
 
 
 class GroupCommand(NamedTuple):
@@ -749,6 +753,10 @@ class GroupCommand(NamedTuple):
     name: str
     help: str
     subcommands: Iterable
+    # description: str = 'default group description'
+    # epilog: str = 'default group epilog'
+    description: str
+    epilog: str
 
 
 CLICommand = Union[ActionCommand, GroupCommand]
@@ -758,23 +766,39 @@ DAGS_COMMANDS = (
     ActionCommand(
         name='list',
         help="List all the DAGs",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.dag_command.dag_list_dags'),
         args=(ARG_SUBDIR, ARG_OUTPUT),
     ),
     ActionCommand(
         name='report',
         help='Show DagBag loading report',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.dag_command.dag_report'),
         args=(ARG_SUBDIR, ARG_OUTPUT),
     ),
     ActionCommand(
         name='list_runs',
-        help=(
-            "List dag runs given a DAG id. If state option is given, it will only search for all the "
-            "dagruns with the given state. If no_backfill option is given, it will filter out all "
-            "backfill dagruns for given dag id. If start_date is given, it will filter out all the "
-            "dagruns that were executed before this date. If end_date is given, it will filter out "
-            "all the dagruns that were executed after this date. "
+        help="List dag runs given a DAG id",
+        description=(
+            "List dag runs given a DAG id. If state option is given, it will only search for all the dagruns "
+            "with the given state. If no_backfill option is given, it will filter out all backfill dagruns "
+            "for given dag id. If start_date is given, it will filter out all the dagruns that were executed "
+            "before this date. If end_date is given, it will filter out all the dagruns that were executed "
+            "after this date."
+        ),
+        epilog=(
+            "todo"
         ),
         func=lazy_load_command('airflow.cli.commands.dag_command.dag_list_dag_runs'),
         args=(ARG_DAG_ID_OPT, ARG_NO_BACKFILL, ARG_STATE, ARG_OUTPUT, ARG_START_DATE, ARG_END_DATE),
@@ -782,58 +806,110 @@ DAGS_COMMANDS = (
     ActionCommand(
         name='list_jobs',
         help="List the jobs",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.dag_command.dag_list_jobs'),
         args=(ARG_DAG_ID_OPT, ARG_STATE, ARG_LIMIT, ARG_OUTPUT,),
     ),
     ActionCommand(
         name='state',
         help="Get the status of a dag run",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.dag_command.dag_state'),
         args=(ARG_DAG_ID, ARG_EXECUTION_DATE, ARG_SUBDIR),
     ),
     ActionCommand(
         name='next_execution',
         help="Get the next execution datetime of a DAG",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.dag_command.dag_next_execution'),
         args=(ARG_DAG_ID, ARG_SUBDIR),
     ),
     ActionCommand(
         name='pause',
         help='Pause a DAG',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.dag_command.dag_pause'),
         args=(ARG_DAG_ID, ARG_SUBDIR),
     ),
     ActionCommand(
         name='unpause',
         help='Resume a paused DAG',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.dag_command.dag_unpause'),
         args=(ARG_DAG_ID, ARG_SUBDIR),
     ),
     ActionCommand(
         name='trigger',
         help='Trigger a DAG run',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.dag_command.dag_trigger'),
         args=(ARG_DAG_ID, ARG_SUBDIR, ARG_RUN_ID, ARG_CONF, ARG_EXEC_DATE),
     ),
     ActionCommand(
         name='delete',
         help="Delete all DB records related to the specified DAG",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.dag_command.dag_delete'),
         args=(ARG_DAG_ID, ARG_YES),
     ),
     ActionCommand(
         name='show',
         help="Displays DAG's tasks with their dependencies",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.dag_command.dag_show'),
         args=(ARG_DAG_ID, ARG_SUBDIR, ARG_SAVE, ARG_IMGCAT,),
     ),
     ActionCommand(
         name='backfill',
-        help=(
-            "Run subsections of a DAG for a specified date range. If reset_dag_run option is used, "
-            "backfill will first prompt users whether airflow should clear all the previous dag_run and "
-            "task_instances within the backfill date range. If rerun_failed_tasks is used, backfill "
-            "will auto re-run the previous failed task instances  within the backfill date range"
+        help="Run subsections of a DAG for a specified date range",
+        description=(
+            "Run subsections of a DAG for a specified date range. If reset_dag_run option is used, backfill "
+            "will first prompt users whether airflow should clear all the previous dag_run and task_instances "
+            "within the backfill date range. If rerun_failed_tasks is used, backfill will auto re-run the "
+            "previous failed task instances within the backfill date range."
+        ),
+        epilog=(
+            "todo"
         ),
         func=lazy_load_command('airflow.cli.commands.dag_command.dag_backfill'),
         args=(
@@ -847,6 +923,12 @@ DAGS_COMMANDS = (
         func=lazy_load_command('airflow.cli.commands.dag_command.dag_test'),
         name='test',
         help="Execute one run of a DAG",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         args=(
             ARG_DAG_ID, ARG_EXECUTION_DATE, ARG_SUBDIR, ARG_SHOW_DAGRUN, ARG_IMGCAT_DAGRUN, ARG_SAVE_DAGRUN
         ),
@@ -856,12 +938,24 @@ TASKS_COMMANDS = (
     ActionCommand(
         name='list',
         help="List the tasks within a DAG",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.task_command.task_list'),
         args=(ARG_DAG_ID, ARG_TREE, ARG_SUBDIR),
     ),
     ActionCommand(
         name='clear',
         help="Clear a set of task instance, as if they never ran",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.task_command.task_clear'),
         args=(
             ARG_DAG_ID, ARG_TASK_REGEX, ARG_START_DATE, ARG_END_DATE, ARG_SUBDIR, ARG_UPSTREAM,
@@ -872,15 +966,25 @@ TASKS_COMMANDS = (
     ActionCommand(
         name='state',
         help="Get the status of a task instance",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.task_command.task_state'),
         args=(ARG_DAG_ID, ARG_TASK_ID, ARG_EXECUTION_DATE, ARG_SUBDIR),
     ),
     ActionCommand(
         name='failed_deps',
-        help=(
-            "Returns the unmet dependencies for a task instance from the perspective of the scheduler. "
-            "In other words, why a task instance doesn't get scheduled and then queued by the scheduler, "
-            "and then run by an executor."
+        help="Returns the unmet dependencies for a task instance from the perspective of the scheduler",
+        description=(
+            "Returns the unmet dependencies for a task instance from the perspective of the scheduler. In "
+            "other words, why a task instance doesn't get scheduled and then queued by the scheduler, and "
+            "then run by an executor."
+        ),
+        epilog=(
+            "todo"
         ),
         func=lazy_load_command('airflow.cli.commands.task_command.task_failed_deps'),
         args=(ARG_DAG_ID, ARG_TASK_ID, ARG_EXECUTION_DATE, ARG_SUBDIR),
@@ -888,12 +992,24 @@ TASKS_COMMANDS = (
     ActionCommand(
         name='render',
         help="Render a task instance's template(s)",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.task_command.task_render'),
         args=(ARG_DAG_ID, ARG_TASK_ID, ARG_EXECUTION_DATE, ARG_SUBDIR),
     ),
     ActionCommand(
         name='run',
         help="Run a single task instance",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.task_command.task_run'),
         args=(
             ARG_DAG_ID, ARG_TASK_ID, ARG_EXECUTION_DATE, ARG_SUBDIR, ARG_MARK_SUCCESS, ARG_FORCE,
@@ -905,8 +1021,14 @@ TASKS_COMMANDS = (
     ActionCommand(
         name='test',
         help=(
-            "Test a task instance. This will run a task without checking for dependencies or recording "
-            "its state in the database"
+            "Test a task instance"
+        ),
+        description=(
+            "Test a task instance. This will run a task without checking for dependencies or recording its "
+            "state in the database."
+        ),
+        epilog=(
+            "todo"
         ),
         func=lazy_load_command('airflow.cli.commands.task_command.task_test'),
         args=(
@@ -917,6 +1039,12 @@ TASKS_COMMANDS = (
     ActionCommand(
         name='states_for_dag_run',
         help="Get the status of all task instances in a dag run",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.task_command.task_states_for_dag_run'),
         args=(ARG_DAG_ID, ARG_EXECUTION_DATE, ARG_OUTPUT),
     ),
@@ -925,36 +1053,72 @@ POOLS_COMMANDS = (
     ActionCommand(
         name='list',
         help='List pools',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.pool_command.pool_list'),
         args=(ARG_OUTPUT,),
     ),
     ActionCommand(
         name='get',
         help='Get pool size',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.pool_command.pool_get'),
         args=(ARG_POOL_NAME, ARG_OUTPUT,),
     ),
     ActionCommand(
         name='set',
         help='Configure pool',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.pool_command.pool_set'),
         args=(ARG_POOL_NAME, ARG_POOL_SLOTS, ARG_POOL_DESCRIPTION, ARG_OUTPUT,),
     ),
     ActionCommand(
         name='delete',
         help='Delete pool',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.pool_command.pool_delete'),
         args=(ARG_POOL_NAME, ARG_OUTPUT,),
     ),
     ActionCommand(
         name='import',
         help='Import pools',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.pool_command.pool_import'),
         args=(ARG_POOL_IMPORT, ARG_OUTPUT,),
     ),
     ActionCommand(
         name='export',
         help='Export all pools',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.pool_command.pool_export'),
         args=(ARG_POOL_EXPORT, ARG_OUTPUT,),
     ),
@@ -963,36 +1127,72 @@ VARIABLES_COMMANDS = (
     ActionCommand(
         name='list',
         help='List variables',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.variable_command.variables_list'),
         args=(),
     ),
     ActionCommand(
         name='get',
         help='Get variable',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.variable_command.variables_get'),
         args=(ARG_VAR, ARG_JSON, ARG_DEFAULT),
     ),
     ActionCommand(
         name='set',
         help='Set variable',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.variable_command.variables_set'),
         args=(ARG_VAR, ARG_VAR_VALUE, ARG_JSON),
     ),
     ActionCommand(
         name='delete',
         help='Delete variable',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.variable_command.variables_delete'),
         args=(ARG_VAR,),
     ),
     ActionCommand(
         name='import',
         help='Import variables',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.variable_command.variables_import'),
         args=(ARG_VAR_IMPORT,),
     ),
     ActionCommand(
         name='export',
         help='Export all variables',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.variable_command.variables_export'),
         args=(ARG_VAR_EXPORT,),
     ),
@@ -1001,36 +1201,72 @@ DB_COMMANDS = (
     ActionCommand(
         name='init',
         help="Initialize the metadata database",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.db_command.initdb'),
         args=(),
     ),
     ActionCommand(
         name="check-migrations",
         help="Check if migration have finished (or continually check until timeout)",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.db_command.check_migrations'),
         args=(ARG_MIGRATION_TIMEOUT,),
     ),
     ActionCommand(
         name='reset',
         help="Burn down and rebuild the metadata database",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.db_command.resetdb'),
         args=(ARG_YES,),
     ),
     ActionCommand(
         name='upgrade',
         help="Upgrade the metadata database to latest version",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.db_command.upgradedb'),
         args=(),
     ),
     ActionCommand(
         name='shell',
         help="Runs a shell to access the database",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.db_command.shell'),
         args=(),
     ),
     ActionCommand(
         name='check',
         help="Check if the database can be reached.",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.db_command.check'),
         args=(),
     ),
@@ -1039,18 +1275,36 @@ CONNECTIONS_COMMANDS = (
     ActionCommand(
         name='list',
         help='List connections',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.connection_command.connections_list'),
         args=(ARG_OUTPUT, ARG_CONN_ID_FILTER, ARG_INCLUDE_SECRETS),
     ),
     ActionCommand(
         name='add',
         help='Add a connection',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.connection_command.connections_add'),
         args=(ARG_CONN_ID, ARG_CONN_URI, ARG_CONN_EXTRA) + tuple(ALTERNATIVE_CONN_SPECS_ARGS),
     ),
     ActionCommand(
         name='delete',
         help='Delete a connection',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.connection_command.connections_delete'),
         args=(ARG_CONN_ID,),
     ),
@@ -1059,12 +1313,24 @@ USERS_COMMANDS = (
     ActionCommand(
         name='list',
         help='List users',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.user_command.users_list'),
         args=(ARG_OUTPUT,),
     ),
     ActionCommand(
         name='create',
         help='Create a user',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.user_command.users_create'),
         args=(
             ARG_ROLE, ARG_USERNAME, ARG_EMAIL, ARG_FIRSTNAME, ARG_LASTNAME, ARG_PASSWORD,
@@ -1074,30 +1340,60 @@ USERS_COMMANDS = (
     ActionCommand(
         name='delete',
         help='Delete a user',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.user_command.users_delete'),
         args=(ARG_USERNAME,),
     ),
     ActionCommand(
         name='add_role',
         help='Add role to a user',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.user_command.add_role'),
         args=(ARG_USERNAME_OPTIONAL, ARG_EMAIL_OPTIONAL, ARG_ROLE),
     ),
     ActionCommand(
         name='remove_role',
         help='Remove role from a user',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.user_command.remove_role'),
         args=(ARG_USERNAME_OPTIONAL, ARG_EMAIL_OPTIONAL, ARG_ROLE),
     ),
     ActionCommand(
         name='import',
         help='Import users',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.user_command.users_import'),
         args=(ARG_USER_IMPORT,),
     ),
     ActionCommand(
         name='export',
         help='Export all users',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.user_command.users_export'),
         args=(ARG_USER_EXPORT,),
     ),
@@ -1106,12 +1402,24 @@ ROLES_COMMANDS = (
     ActionCommand(
         name='list',
         help='List roles',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.role_command.roles_list'),
         args=(ARG_OUTPUT,),
     ),
     ActionCommand(
         name='create',
         help='Create role',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.role_command.roles_create'),
         args=(ARG_ROLES,),
     ),
@@ -1121,6 +1429,12 @@ CELERY_COMMANDS = (
     ActionCommand(
         name='worker',
         help="Start a Celery worker node",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.celery_command.worker'),
         args=(
             ARG_DO_PICKLE, ARG_QUEUES, ARG_CONCURRENCY, ARG_CELERY_HOSTNAME, ARG_PID, ARG_DAEMON,
@@ -1130,6 +1444,12 @@ CELERY_COMMANDS = (
     ActionCommand(
         name='flower',
         help="Start a Celery Flower",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.celery_command.flower'),
         args=(
             ARG_FLOWER_HOSTNAME, ARG_FLOWER_PORT, ARG_FLOWER_CONF, ARG_FLOWER_URL_PREFIX,
@@ -1140,6 +1460,12 @@ CELERY_COMMANDS = (
     ActionCommand(
         name='stop',
         help="Stop the Celery worker gracefully",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.celery_command.stop_worker'),
         args=(),
     )
@@ -1149,37 +1475,79 @@ airflow_commands: List[CLICommand] = [
     GroupCommand(
         name='dags',
         help='List and manage DAGs',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         subcommands=DAGS_COMMANDS,
     ),
     GroupCommand(
         name='tasks',
         help='List and manage tasks',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         subcommands=TASKS_COMMANDS,
     ),
     GroupCommand(
         name='pools',
         help="CRUD operations on pools",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         subcommands=POOLS_COMMANDS,
     ),
     GroupCommand(
         name='variables',
         help="CRUD operations on variables",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         subcommands=VARIABLES_COMMANDS,
     ),
     GroupCommand(
         name='db',
         help="Database operations",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         subcommands=DB_COMMANDS,
     ),
     ActionCommand(
         name='kerberos',
         help="Start a kerberos ticket renewer",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.kerberos_command.kerberos'),
         args=(ARG_PRINCIPAL, ARG_KEYTAB, ARG_PID, ARG_DAEMON, ARG_STDOUT, ARG_STDERR, ARG_LOG_FILE),
     ),
     ActionCommand(
         name='webserver',
         help="Start a Airflow webserver instance",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.webserver_command.webserver'),
         args=(
             ARG_PORT, ARG_WORKERS, ARG_WORKERCLASS, ARG_WORKER_TIMEOUT, ARG_HOSTNAME, ARG_PID,
@@ -1190,6 +1558,12 @@ airflow_commands: List[CLICommand] = [
     ActionCommand(
         name='scheduler',
         help="Start a scheduler instance",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.scheduler_command.scheduler'),
         args=(
             ARG_DAG_ID_OPT, ARG_SUBDIR, ARG_NUM_RUNS, ARG_DO_PICKLE, ARG_PID, ARG_DAEMON, ARG_STDOUT,
@@ -1199,57 +1573,106 @@ airflow_commands: List[CLICommand] = [
     ActionCommand(
         name='version',
         help="Show the version",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.version_command.version'),
         args=(),
     ),
     GroupCommand(
         name='connections',
         help="List/Add/Delete connections",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         subcommands=CONNECTIONS_COMMANDS,
     ),
     GroupCommand(
         name='users',
         help="CRUD operations on users",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         subcommands=USERS_COMMANDS,
     ),
     GroupCommand(
         name='roles',
         help='Create/List roles',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         subcommands=ROLES_COMMANDS,
     ),
     ActionCommand(
         name='sync_perm',
         help="Update permissions for existing roles and DAGs",
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.sync_perm_command.sync_perm'),
         args=(),
     ),
     ActionCommand(
         name='rotate_fernet_key',
-        func=lazy_load_command('airflow.cli.commands.rotate_fernet_key_command.rotate_fernet_key'),
-        help=(
-            'Rotate all encrypted connection credentials and variables; see '
-            'https://airflow.readthedocs.io/en/stable/howto/secure-connections.html'
-            '#rotating-encryption-keys'
+        help="Rotate all encrypted connection credentials and variables",
+        description=(
+            "Rotate all encrypted connection credentials and variables. See "
+            "https://airflow.readthedocs.io/en/stable/howto/secure-connections.html#rotating-encryption-keys."
         ),
+        epilog=(
+            "todo"
+        ),
+        func=lazy_load_command('airflow.cli.commands.rotate_fernet_key_command.rotate_fernet_key'),
         args=(),
     ),
     ActionCommand(
         name='config',
         help='Show current application configuration',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.config_command.show_config'),
         args=(ARG_COLOR, ),
     ),
     ActionCommand(
         name='info',
         help='Show information about current Airflow and environment',
+        description=(
+            "todo"
+        ),
+        epilog=(
+            "todo"
+        ),
         func=lazy_load_command('airflow.cli.commands.info_command.show_info'),
         args=(ARG_ANONYMIZE, ARG_FILE_IO, ),
     ),
     GroupCommand(
         name="celery",
-        help=(
-            'Start celery components. Works only when using CeleryExecutor. For more information, see '
-            'https://airflow.readthedocs.io/en/stable/executor/celery.html'
+        help="Start celery components",
+        description=(
+            "Start celery components. Works only when using CeleryExecutor. For more information, see "
+            "https://airflow.readthedocs.io/en/stable/executor/celery.html."
+        ),
+        epilog=(
+            "todo"
         ),
         subcommands=CELERY_COMMANDS
     )
@@ -1327,7 +1750,7 @@ def _add_command(
     sub: CLICommand
 ) -> None:
     sub_proc = subparsers.add_parser(
-        sub.name, help=sub.help
+        sub.name, help=sub.help, description=sub.description, epilog=sub.epilog
     )
     sub_proc.formatter_class = RawTextHelpFormatter
 
