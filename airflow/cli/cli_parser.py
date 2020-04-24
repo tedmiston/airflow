@@ -742,8 +742,6 @@ class ActionCommand(NamedTuple):
     help: str
     func: Callable
     args: Iterable[Arg]
-    # description: str = 'default action description'
-    # epilog: str = 'default action epilog'
     description: str
     epilog: str
 
@@ -753,8 +751,6 @@ class GroupCommand(NamedTuple):
     name: str
     help: str
     subcommands: Iterable
-    # description: str = 'default group description'
-    # epilog: str = 'default group epilog'
     description: str
     epilog: str
 
